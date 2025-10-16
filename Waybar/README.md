@@ -25,4 +25,4 @@ waybar
 # Preview
 Here's a quick example image of my Hyprland + Waybar config
 
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/8bc8e4d5-1a82-4552-9d71-92e515e8ddac" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/f19ef89d-8d8d-4ba6-94c8-0b813978bddb" />
