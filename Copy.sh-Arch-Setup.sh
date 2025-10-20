@@ -1,14 +1,23 @@
 cd ~
-rm hello.rs
-rm hello.c
-rm hello.asm
-rm hello.pl
-rm hello.ml
-rm hello.py
-rm hello.js
-./networking.sh
-rm networking.sh
-rm startx.sh
-rm v86-in-v86.js
-clear
-echo Cleared out the Arch Linux VM
+to_remove=(
+  "hello.rs" "hello.c" "hello.asm" "hello.pl" "hello.ml"
+  "hello.py" "hello.js" "networking.sh" "startx.sh" "v86-in-v86.js"
+)
+for file in "${to_remove[@]}"; do
+  if [[ -f $file ]]; then
+    echo "Deleting $file ..."
+    rm "$file"
+  fi
+done
+if [[ -x ./networking.sh ]]; then
+  ./networking.sh
+fi
+sudo pacman -Sy --noconfirm
+sudo pacman -S --noconfirm yay base-devel
+if [[ ! -d paru ]]; then
+  git clone https://aur.archlinux.org/paru.git
+  cd paru
+  makepkg -si --noconfirm
+else
+  echo "paru directory already exists. Skipping clone."
+fi]
