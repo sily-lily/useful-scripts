@@ -1,7 +1,7 @@
 cd ~
 to_remove=(
   "hello.rs" "hello.c" "hello.asm" "hello.pl" "hello.ml"
-  "hello.py" "hello.js" "networking.sh" "startx.sh" "v86-in-v86.js"
+  "hello.py" "hello.js" "startx.sh" "v86-in-v86.js"
 )
 for file in "${to_remove[@]}"; do
   if [[ -f $file ]]; then
@@ -10,6 +10,7 @@ for file in "${to_remove[@]}"; do
   fi
 done
 ./networking.sh
+rm networking.sh
 sudo pacman -Sy --noconfirm
 sudo pacman -S --noconfirm yay base-devel
 if [[ ! -d paru ]]; then
