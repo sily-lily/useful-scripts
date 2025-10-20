@@ -19,4 +19,4 @@ if [[ ! -d paru ]]; then
   makepkg -si --noconfirm
 else
   echo "paru directory already exists. Skipping clone."
-fi]
+fi
