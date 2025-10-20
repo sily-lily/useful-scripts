@@ -9,9 +9,7 @@ for file in "${to_remove[@]}"; do
     rm "$file"
   fi
 done
-if [[ -x ./networking.sh ]]; then
-  ./networking.sh
-fi
+./networking.sh
 sudo pacman -Sy --noconfirm
 sudo pacman -S --noconfirm yay base-devel
 if [[ ! -d paru ]]; then
