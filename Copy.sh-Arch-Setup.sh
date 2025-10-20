@@ -11,3 +11,4 @@ rm networking.sh
 rm startx.sh
 rm v86-in-v86.js
 clear
+echo Cleared out the Arch Linux VM
