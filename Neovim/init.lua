@@ -1,3 +1,12 @@
+-- General stuff
+
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+vim.opt.termguicolors = true
+
+-- Requiring ./lua files
+
 local path = vim.fn.stdpath("config") .. "/lua"
 
 local function require_files(directory, prefix)
