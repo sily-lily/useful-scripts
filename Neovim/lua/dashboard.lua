@@ -36,6 +36,11 @@ pacman.use("https://github.com/goolord/alpha-nvim", function()
         dashboard.button("Q", "  Quit", ":qa<CR>"),       -- Shift Q
     }
 
+    local loaded, failed, skipped = pacman.stats()
+    dashboard.section.footer.val = {
+        string.format("Packages loaded: %d ⬩ Failed: %d ⬩ Skipped: %d", loaded, failed, skipped)
+    }
+
     do
         local padding = math.floor((vim.fn.winheight(0) - (#dashboard.section.header.val + #dashboard.section.buttons.val + #dashboard.section.footer.val + 8)) / 2)
 
