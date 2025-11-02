@@ -1,18 +1,27 @@
 --[[
 
-    Very basic Neovim package manager used in my configuration !!
+                    Very basic Neovim package manager used in my configuration !!
 
-                        October 11th, 2025
+    It's not that good of a package manager, so I added tons of failsafes for manual installations..
+
+                                        November 1st, 2025
 
 ]]
+
+local developer_mode = false -- "true" removes and re-downloads *all* packages
 
 local LC = 0
 local FC = 0
 local SC = 0
 
-local function get_plugin_name(repo)
-    local cmd = string.format("curl -s https://api.github.com/repos/%s/contents/lua", repo)
-    
+local function get_plugin_name(repo, override_api_link)
+    local cmd
+    if override_api_link then
+        cmd = string.format("curl -s %s", override_api_link)
+    else
+        cmd = string.format("curl -s https://api.github.com/repos/%s/contents/lua", repo)
+    end
+
     local result = vim.fn.system(cmd)
     local ok, data = pcall(vim.fn.json_decode, result)
     if not ok or type(data) ~= "table" then
@@ -37,6 +46,10 @@ local function write_installer(url)
     local name = url:match(".*/(.-)%.git$") or url:match(".*/(.-)$")
     local install_path = vim.fn.stdpath("config") .. "/pack/plugins/start/" .. name
 
+    if developer_mode and vim.fn.isdirectory(install_path) == 1 then
+        vim.fn.delete(install_path, "rf")
+    end
+
     local already_installed = vim.fn.isdirectory(install_path) == 1
 
     if not already_installed then
@@ -46,7 +59,7 @@ local function write_installer(url)
         if vim.v.shell_error ~= 0 then
             FC = FC + 1
             vim.notify("Failed to clone plugin: " .. name, vim.log.levels.ERROR)
-            
+
             return name, false
         end
     else
@@ -59,9 +72,9 @@ local function write_installer(url)
     return name, not already_installed
 end
 
-local function use(url, callback, override_guessed_package_name, run)
+local function use(url, callback, override_guessed_package_name, override_api_link, run)
     local repo = url:gsub("https://github.com/", "")
-    local name = get_plugin_name(repo)
+    local name = get_plugin_name(repo, override_api_link)
     
     local _, installed_now = write_installer(url)
 
