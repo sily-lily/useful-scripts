@@ -17,13 +17,19 @@ local function require_files(directory, prefix)
         local stat = vim.loop.fs_stat(full_path)
 
         if stat then
-            if stat.type == "file" and file:match("%.lua$") and file ~= "pacman.lua" then
+            if stat.type == "file" and file:match("%.lua$") and (
+                file ~= "pacman.lua"    and
+                file ~= "binder.lua"    and
+                file ~= "dashboard.lua"
+            ) then
                 require(prefix .. file:gsub("%.lua$", ""))
             elseif stat.type == "directory" then
                 require_files(full_path, prefix .. file .. ".")
             end
         end
     end
+
+    require("dashboard")
 end
 
 require_files(path)
